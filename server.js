@@ -32,6 +32,11 @@ wss.on("connection", (ws) => {
       const { role, employeeId } = msg;
       META.set(ws, { id, role, employeeId });
 
+      if (msg.type === "frame") {
+  const { employeeId, data } = msg;
+  console.log("📌 FRAME FROM:", employeeId);   // <--- ADD THIS LOG
+
+
       if (role === "employee") {
         EMPLOYEE_SOCK.set(employeeId, ws);
         send(ws, { type: "ack", role, employeeId });
